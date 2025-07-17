@@ -19,7 +19,7 @@ export default function FingerprintGen() {
                 //console.log("FINGERPRINT GENERADO:", fingerprint);
 
                 // Llama a la Server Action para verificar
-                const response = await verifyFingerprint(fingerprint, `crm${pathName}`); // Pasamos el path si la acción lo necesita
+                const response = await verifyFingerprint(fingerprint, `trafic-metrics${pathName}`); // Pasamos el path si la acción lo necesita
                 //console.log("RESPUESTA VERIFICACIÓN:", response);
                 
                 if (response.error){
