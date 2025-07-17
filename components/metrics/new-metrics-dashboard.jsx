@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useMemo, useEffect } from "react"
+import { useSearchParams, useRouter, usePathname } from "next/navigation"
 import { fetchMetrics } from "@/lib/server-utils"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -18,12 +19,22 @@ export default function MetricsDashboard() {
   const [data, setData] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
-  const [filters, setFilters] = useState({
-    origin: "all",
-    username: "all",
-    startDate: "",
-    endDate: "",
-  })
+  const searchParams = useSearchParams()
+  const router = useRouter()
+  const pathname = usePathname()
+
+  const filters = useMemo(
+    () => ({
+      origin: searchParams.get("origin") || "all",
+      username: searchParams.get("username") || "all",
+      startDate: searchParams.get("startDate") || "",
+      endDate: searchParams.get("endDate") || "",
+      service: searchParams.get("service") || "",
+      route: searchParams.get("route") || "",
+    }),
+    [searchParams],
+  )
+
   const [activeView, setActiveView] = useState("table")
 
   useEffect(() => {
@@ -31,7 +42,8 @@ export default function MetricsDashboard() {
       setLoading(true)
       setError(null)
       try {
-        const data = await fetchMetrics(filters)
+        const params = new URLSearchParams(searchParams)
+        const data = await fetchMetrics(params)
         if (data.error) {
           setError(data.error)
         } else {
@@ -46,7 +58,7 @@ export default function MetricsDashboard() {
     }
 
     loadData()
-  }, [filters])
+  }, [searchParams])
 
   // Get unique values for filter dropdowns
   const uniqueOrigins = useMemo(() => Array.from(new Set(data.map((item) => item.origin))), [data])
@@ -175,13 +187,20 @@ export default function MetricsDashboard() {
     }
   }, [filteredData])
 
+  const setFilters = (newFilters) => {
+    const params = new URLSearchParams(searchParams)
+    for (const key in newFilters) {
+      if (newFilters[key] && newFilters[key] !== "all") {
+        params.set(key, newFilters[key])
+      } else {
+        params.delete(key)
+      }
+    }
+    router.replace(`${pathname}?${params.toString()}`)
+  }
+
   const clearFilters = () => {
-    setFilters({
-      origin: "all",
-      username: "all",
-      startDate: "",
-      endDate: "",
-    })
+    router.replace(pathname)
   }
 
   if (loading) {

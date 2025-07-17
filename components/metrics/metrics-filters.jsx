@@ -29,7 +29,7 @@ export default function MetricsFilters({
             <Label htmlFor="origin">Origin</Label>
             <Select
               value={filters.origin}
-              onValueChange={(value) => setFilters((prev) => ({ ...prev, origin: value }))}
+              onValueChange={(value) => setFilters({ origin: value })}
             >
               <SelectTrigger>
                 <SelectValue placeholder="Select origin" />
@@ -49,7 +49,7 @@ export default function MetricsFilters({
             <Label htmlFor="username">Username</Label>
             <Select
               value={filters.username}
-              onValueChange={(value) => setFilters((prev) => ({ ...prev, username: value }))}
+              onValueChange={(value) => setFilters({ username: value })}
             >
               <SelectTrigger>
                 <SelectValue placeholder="Select username" />
@@ -71,7 +71,7 @@ export default function MetricsFilters({
               id="startDate"
               type="date"
               value={filters.startDate}
-              onChange={(e) => setFilters((prev) => ({ ...prev, startDate: e.target.value }))}
+              onChange={(e) => setFilters({ startDate: e.target.value })}
             />
           </div>
 
@@ -81,7 +81,7 @@ export default function MetricsFilters({
               id="endDate"
               type="date"
               value={filters.endDate}
-              onChange={(e) => setFilters((prev) => ({ ...prev, endDate: e.target.value }))}
+              onChange={(e) => setFilters({ endDate: e.target.value })}
             />
           </div>
         </div>
