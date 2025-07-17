@@ -1,0 +1,17 @@
+services:
+  nextjs:
+    build:
+      context: .
+      dockerfile: Dockerfile # Ensure this points to your Next.js Dockerfile
+    container_name: crm
+    ports:
+      - "3002:3002" # Map host port 8090 to container port 8090
+    env_file:
+      - .env # Load environment variables for the Next.js app
+    networks:
+      - vps-database_network
+    restart: unless-stopped
+    
+networks:
+  vps-database_network:
+    external: true # Ensures the network already exists and is not recreated

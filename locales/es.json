@@ -1,0 +1,36 @@
+{
+"login_title": "Bienvenido de nuevo",
+    "login_subtitle": "Inicia sesión en Peronda Group",
+    "login_username_label": "Usuario",
+    "login_username_placeholder": "peronda",
+    "login_password_label": "Contraseña",
+    "login_password_placeholder": "••••••••",
+    "login_forgot": "¿Has olvidado tu contraseña?",
+    "login_forgot_mail_subject": "He olvidado mi contraseña inicio sesión en web",
+    "login_submit": "Iniciar sesión",
+    "login_help_text": "¿Problemas para iniciar sesión?",
+    "login_help_link": "Ayuda",
+    "login_help_mail_subject": "Problema de inicio de sesión en web",
+
+    "sidebar_menu": "Menú",
+    "sidebar_element_inicio": "Inicio",
+    "sidebar_element_companies": "Compañias",
+    "sidebar_element_actions": "Acciones",
+    "sidebar_element_trips": "Viajes",
+    "sidebar_element_contacts": "Contactos",
+    "sidebar_element_settings": "Ajustes",
+    "sidebar_element_calendar": "Calendario",
+
+    "log_out": "Cerrar sesión",
+
+    "settings_tittle": "Ajustes",
+    "settings_subtitle": "Configuración y preferencias de la aplicación",
+    "settings_language_title": "Ajustes de idioma",
+    "settings_language_description": "Elige tu idioma preferido para la interfaz de la aplicación",
+    "settings_language_label": "Idioma",
+    "settings_language_spanish": "Español",
+    "settings_language_english": "Inglés",
+    "settings_company_tittle": "Ajustes de empresa",
+    "settings_company_description": "Seleccione la empresa con la que va a trabajar",
+    "setting_company_label": "Empresa"
+}

@@ -1,0 +1,36 @@
+{ 
+    "login_title": "Welcome back",
+    "login_subtitle": "Sign in to Peronda Group",
+    "login_username_label": "Username",
+    "login_username_placeholder": "peronda",
+    "login_password_label": "Password",
+    "login_password_placeholder": "••••••••",
+    "login_forgot": "Forgot your password?",
+    "login_forgot_mail_subject": "I forgot my password to log into the website",
+    "login_submit": "Sign in",
+    "login_help_text": "Having trouble signing in?",
+    "login_help_link": "Help",
+    "login_help_mail_subject": "Login issue on website",
+
+    "sidebar_menu": "Menu",
+    "sidebar_element_inicio": "Home",
+    "sidebar_element_companies": "Companies",
+    "sidebar_element_actions": "Actions",
+    "sidebar_element_trips": "Trips",
+    "sidebar_element_contacts": "Contacts",
+    "sidebar_element_settings": "Settings",
+    "sidebar_element_calendar": "Calendar",
+
+    "log_out": "Log out",
+
+    "settings_tittle": "Settings",
+    "settings_subtitle": "Manage your application preferences and settings",    
+    "settings_language_title": "Language Settings",
+    "settings_language_description": "Choose your preferred language for the application interface",
+    "settings_language_label": "Language",
+    "settings_language_spanish": "Spanish",
+    "settings_language_english": "English",
+    "settings_company_tittle": "Company settings",
+    "settings_company_description": "Select the company you will be working with",
+    "setting_company_label": "Company"
+}
