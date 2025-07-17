@@ -15,7 +15,7 @@ export default function RefreshButton() {
     };
 
   return (
-    <Button onClick={handleRefresh} variant="outline">
+    <Button onClick={handleRefresh} variant="outline" className={"cursor-pointer"} disabled={loading}>
       <RefreshCw className={`w-4 h-4 mr-2 ${loading ? "animate-spin" : ""}`} />
       Refresh Data
     </Button>
