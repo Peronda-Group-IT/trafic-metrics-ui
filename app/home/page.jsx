@@ -14,6 +14,8 @@ const HomePage = async ({ searchParams }) => {
 
   const usernames = await fetchUsernames();
 
+  //console.log(metrics)
+
   return (
     <div className="min-h-screen bg-gray-50 p-6 max-w-7xl mx-auto">
       <div className="space-y-6">

@@ -1,6 +1,7 @@
 
 import MetricsTopCards from "./metrics-top-cards";
 import MetricsFilters from "./metrics-filters";
+import TableGraphContainer from "./table-graph-container";
 
 export default function MetricsDashboard({ data, origins, usernames }) {
 
@@ -17,7 +18,7 @@ export default function MetricsDashboard({ data, origins, usernames }) {
         uniqueUsernames={usernames}
       />
 
-      {/*<TableGraphContainer data={data}/>*/}
+      <TableGraphContainer data={data}/>
     </>
   );
 }

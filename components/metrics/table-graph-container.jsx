@@ -1,3 +1,5 @@
+'use client'
+
 import {
   Card,
   CardContent,
@@ -24,6 +26,14 @@ const COLORS = [
 export default function TableGraphContainer({ data }) {
   const [activeView, setActiveView] = useState("table");
 
+  const uniqueServicesForChart = useMemo(
+    () =>
+      Array.from(
+        new Set(data.map((item) => item.service || "unknown"))
+      ),
+    [data]
+  );
+
   const chartConfig = useMemo(() => {
     return uniqueServicesForChart.reduce((acc, service, index) => {
       acc[service] = {
@@ -34,20 +44,20 @@ export default function TableGraphContainer({ data }) {
     }, {});
   }, [uniqueServicesForChart]);
 
-    const uniqueServicesForChart = useMemo(
-    () =>
-      Array.from(
-        new Set(data.map((item) => item.service || "unknown"))
-      ),
-    [filteredData]
-  );
-
   // Chart data calculations
   const chartData = useMemo(() => {
-    const { startDate, endDate } = filters;
-    const from = startDate ? new Date(startDate) : null;
-    const to = endDate ? new Date(endDate) : null;
-    const isSingleDay = from && to && from.toDateString() === to.toDateString();
+    if (!data || data.length === 0) {
+      return {
+        timeline: [],
+        routes: [],
+        users: [],
+        services: [],
+      };
+    }
+    // Determine if the date range is a single day
+    const firstDate = new Date(data[0].timestamp);
+    const lastDate = new Date(data[data.length - 1].timestamp);
+    const isSingleDay = firstDate.toDateString() === lastDate.toDateString();
 
     // Timeline data - requests per hour or day
     const timelineDataMap = data.reduce((acc, item) => {
@@ -113,7 +123,7 @@ export default function TableGraphContainer({ data }) {
       users: userActivity.slice(0, 10),
       services: serviceData,
     };
-  }, [data, filters]);
+  }, [data, uniqueServicesForChart]);
 
   return (
     <>
@@ -124,7 +134,7 @@ export default function TableGraphContainer({ data }) {
             <div>
               <CardTitle>Data Analysis</CardTitle>
               <CardDescription>
-                Showing {filteredData.length} of {data.length} records
+                Showing {data.length} records
               </CardDescription>
             </div>
             <Tabs
@@ -156,7 +166,7 @@ export default function TableGraphContainer({ data }) {
             onValueChange={(value) => setActiveView(value)}
           >
             <TabsContent value="table" className="mt-0">
-              <MetricsTable data={filteredData} />
+              <MetricsTable data={data} />
             </TabsContent>
 
             <TabsContent value="charts" className="mt-0">
