@@ -3,7 +3,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile # Ensure this points to your Next.js Dockerfile
-    container_name: crm
+    container_name: trafuc-metrics
     ports:
       - "3004:3000" # Map host port 8090 to container port 8090
     env_file:
