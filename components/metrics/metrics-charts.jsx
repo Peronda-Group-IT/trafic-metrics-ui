@@ -38,7 +38,7 @@ export default function MetricsCharts({ chartData, chartConfig, uniqueServicesFo
           <CardDescription>Requests over time by service</CardDescription>
         </CardHeader>
         <CardContent>
-          <ChartContainer config={chartConfig} className="h-[350px]">
+          <ChartContainer config={chartConfig} className={"h-96"}>
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={chartData.timeline}>
                 <CartesianGrid strokeDasharray="3 3" />
@@ -79,7 +79,7 @@ export default function MetricsCharts({ chartData, chartConfig, uniqueServicesFo
                 color: "hsl(var(--chart-4))",
               },
             }}
-            className="h-[350px]"
+            className={"h-72"}
           >
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
@@ -123,7 +123,7 @@ export default function MetricsCharts({ chartData, chartConfig, uniqueServicesFo
                 color: "hsl(var(--chart-3))",
               },
             }}
-            className="h-[300px]"
+            className={"h-72"}
           >
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={chartData.users} layout="vertical">
