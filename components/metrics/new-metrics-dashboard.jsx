@@ -115,23 +115,28 @@ export default function MetricsDashboard({ initialData: data }) {
 
   // Chart data calculations
   const chartData = useMemo(() => {
+    const { startDate, endDate } = filters
+    const from = startDate ? new Date(startDate) : null
+    const to = endDate ? new Date(endDate) : null
+    const isSingleDay = from && to && from.toDateString() === to.toDateString()
+
     // Timeline data - requests per hour
     const timelineDataMap = filteredData.reduce((acc, item) => {
-      const hour = format(new Date(item.timestamp), "MMM dd, HH:mm");
-      const service = item.service || "unknown";
+      const date = new Date(item.timestamp)
+      const timeKey = isSingleDay ? format(date, "HH:00") : format(date, "MMM dd")
+      const service = item.service || "unknown"
 
-      if (!acc[hour]) {
-        const date = new Date(item.timestamp);
-        acc[hour] = { time: hour, timestamp: date.getTime() };
-        uniqueServicesForChart.forEach((s) => {
-          acc[hour][s] = 0;
-        });
+      if (!acc[timeKey]) {
+        acc[timeKey] = { time: timeKey, timestamp: date.getTime() }
+        uniqueServicesForChart.forEach(s => {
+          acc[timeKey][s] = 0
+        })
       }
 
-      acc[hour][service] += 1;
+      acc[timeKey][service] += 1
 
-      return acc;
-    }, {});
+      return acc
+    }, {})
 
     const timelineData = Object.values(timelineDataMap).sort(
       (a, b) => a.timestamp - b.timestamp
@@ -172,12 +177,12 @@ export default function MetricsDashboard({ initialData: data }) {
     }, []);
 
     return {
-      timeline: timelineData.slice(-20), // Last 20 time points
+      timeline: timelineData,
       routes: routeData.slice(0, 10), // Top 10 routes
       users: userActivity.slice(0, 10), // Top 10 users
       services: serviceData,
     };
-  }, [filteredData]);
+  }, [filteredData, filters]);
 
   const setFilters = (newFilters) => {
     const params = new URLSearchParams(searchParams);
@@ -227,12 +232,12 @@ export default function MetricsDashboard({ initialData: data }) {
               value={activeView}
               onValueChange={(value) => setActiveView(value)}
             >
-              <TabsList>
-                <TabsTrigger value="table" className="flex items-center gap-2">
+              <TabsList className={"flex items-center space-x-1"}>
+                <TabsTrigger value="table" className="flex items-center gap-2 cursor-pointer">
                   <ActivityIcon className="w-4 h-4" />
                   Table
                 </TabsTrigger>
-                <TabsTrigger value="charts" className="flex items-center gap-2">
+                <TabsTrigger value="charts" className="flex items-center gap-2 cursor-pointer">
                   <BarChart3Icon className="w-4 h-4" />
                   Charts
                 </TabsTrigger>
