@@ -1,22 +1,30 @@
-'use client'
+"use client";
 
 import { Button } from "../ui/button";
-import { useState } from "react";
+import { useTransition } from "react";
+import { useRouter } from "next/navigation";
 import { RefreshCw } from "lucide-react";
 
 export default function RefreshButton() {
+  const router = useRouter();
+  const [isPending, startTransition] = useTransition();
 
-    const [loading, setLoading] = useState(false);
-
-    const handleRefresh = async () => { 
-        setLoading(true);
-        window.location.reload()
-        
-    };
+  const handleRefresh = () => {
+    startTransition(() => {
+      router.refresh(); // Triggers re-fetch of server data
+    });
+  };
 
   return (
-    <Button onClick={handleRefresh} variant="outline" className={"cursor-pointer"} disabled={loading}>
-      <RefreshCw className={`w-4 h-4 mr-2 ${loading ? "animate-spin" : ""}`} />
+    <Button
+      onClick={handleRefresh}
+      variant="outline"
+      className="cursor-pointer"
+      disabled={isPending}
+    >
+      <RefreshCw
+        className={`w-4 h-4 mr-2 ${isPending ? "animate-spin" : ""}`}
+      />
       Refresh Data
     </Button>
   );
