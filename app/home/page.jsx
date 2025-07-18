@@ -1,13 +1,11 @@
 import { MetricsDashboardSkeleton } from "@/components/metrics/metrics-dashboard-skeleton";
 import RefreshButton from "@/components/metrics/metrics-refresh-button";
 import MetricsDashboard from "@/components/metrics/new-metrics-dashboard";
-import { Button } from "@/components/ui/button";
 import { fetchMetrics } from "@/lib/server-utils";
-import { RefreshCcw } from "lucide-react";
 import { Suspense } from "react";
 
 const HomePage = async ({ searchParams }) => {
-  const metrics = await fetchMetrics(searchParams);
+  const metrics = await fetchMetrics();
 
   return (
     <div className="min-h-screen bg-gray-50 p-6 max-w-7xl mx-auto">
