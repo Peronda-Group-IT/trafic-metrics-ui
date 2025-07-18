@@ -1,11 +1,28 @@
-"use client"
+"use client";
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Button } from "@/components/ui/button"
-import { FilterIcon } from "lucide-react"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Button } from "@/components/ui/button";
+import { FilterIcon } from "lucide-react";
+import { Calendar } from "../ui/calendar";
+import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
+import { ChevronDownIcon } from "lucide-react";
+import { format } from "date-fns";
+import React, { useState } from "react";
 
 export default function MetricsFilters({
   filters,
@@ -14,6 +31,8 @@ export default function MetricsFilters({
   uniqueUsernames,
   clearFilters,
 }) {
+  const [open1, setOpen1] = useState(false);
+  const [open2, setOpen2] = useState(false);
   return (
     <Card>
       <CardHeader>
@@ -21,17 +40,19 @@ export default function MetricsFilters({
           <FilterIcon className="h-5 w-5" />
           Filters
         </CardTitle>
-        <CardDescription>Filter your metrics data by origin, username, and date range</CardDescription>
+        <CardDescription>
+          Filter your metrics data by origin, username, and date range
+        </CardDescription>
       </CardHeader>
       <CardContent>
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
-          <div className="space-y-2">
+          <div className="space-y-2 w-full">
             <Label htmlFor="origin">Origin</Label>
             <Select
               value={filters.origin}
               onValueChange={(value) => setFilters({ origin: value })}
             >
-              <SelectTrigger>
+              <SelectTrigger className={"w-full cursor-pointer"}>
                 <SelectValue placeholder="Select origin" />
               </SelectTrigger>
               <SelectContent>
@@ -51,7 +72,7 @@ export default function MetricsFilters({
               value={filters.username}
               onValueChange={(value) => setFilters({ username: value })}
             >
-              <SelectTrigger>
+              <SelectTrigger className={"w-full cursor-pointer"}>
                 <SelectValue placeholder="Select username" />
               </SelectTrigger>
               <SelectContent>
@@ -67,31 +88,107 @@ export default function MetricsFilters({
 
           <div className="space-y-2">
             <Label htmlFor="startDate">Start Date</Label>
-            <Input
-              id="startDate"
-              type="date"
-              value={filters.startDate}
-              onChange={(e) => setFilters({ startDate: e.target.value })}
-            />
+            <Popover open={open1} onOpenChange={setOpen1}>
+              <PopoverTrigger asChild>
+                <Button
+                  variant="outline"
+                  id="date"
+                  className="w-full justify-between font-normal cursor-pointer"
+                >
+                  {filters.startDate
+                    ? format(
+                        new Date(filters.startDate.replace(/-/g, "/")),
+                        "dd/MM/yy"
+                      )
+                    : "dd/mm/yy"}
+                  <ChevronDownIcon className="text-gray-400" />
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent
+                className="w-auto overflow-hidden p-0"
+                align="start"
+              >
+                <Calendar
+                  mode="single"
+                  selected={
+                    filters.startDate
+                      ? new Date(filters.startDate.replace(/-/g, "/"))
+                      : undefined
+                  }
+                  captionLayout="dropdown"
+                  onSelect={(date) => {
+                    setFilters({
+                      startDate: date ? format(date, "yyyy-MM-dd") : undefined,
+                    });
+                    setOpen1(false);
+                  }}
+                  toDate={
+                    filters.endDate
+                      ? new Date(filters.endDate.replace(/-/g, "/"))
+                      : undefined
+                  }
+                />
+              </PopoverContent>
+            </Popover>
           </div>
 
           <div className="space-y-2">
             <Label htmlFor="endDate">End Date</Label>
-            <Input
-              id="endDate"
-              type="date"
-              value={filters.endDate}
-              onChange={(e) => setFilters({ endDate: e.target.value })}
-            />
+            <Popover open={open2} onOpenChange={setOpen2}>
+              <PopoverTrigger asChild>
+                <Button
+                  variant="outline"
+                  id="date"
+                  className="w-full justify-between font-normal cursor-pointer"
+                >
+                  {filters.endDate
+                    ? format(
+                        new Date(filters.endDate.replace(/-/g, "/")),
+                        "dd/MM/yy"
+                      )
+                    : "dd/mm/yy"}
+                  <ChevronDownIcon className="text-gray-400" />
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent
+                className="w-auto overflow-hidden p-0"
+                align="start"
+              >
+                <Calendar
+                  mode="single"
+                  selected={
+                    filters.endDate
+                      ? new Date(filters.endDate.replace(/-/g, "/"))
+                      : undefined
+                  }
+                  captionLayout="dropdown"
+                  onSelect={(date) => {
+                    setFilters({
+                      endDate: date ? format(date, "yyyy-MM-dd") : undefined,
+                    });
+                    setOpen2(false);
+                  }}
+                  fromDate={
+                    filters.startDate
+                      ? new Date(filters.startDate.replace(/-/g, "/"))
+                      : undefined
+                  }
+                />
+              </PopoverContent>
+            </Popover>
           </div>
         </div>
 
         <div className="mt-4 flex justify-end">
-          <Button variant="outline" onClick={clearFilters}>
+          <Button
+            variant="outline"
+            onClick={clearFilters}
+            className={"cursor-pointer"}
+          >
             Clear Filters
           </Button>
         </div>
       </CardContent>
     </Card>
-  )
+  );
 }
