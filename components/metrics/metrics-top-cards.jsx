@@ -2,8 +2,27 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { ActivityIcon, GlobeIcon, TrendingUpIcon, UsersIcon } from "lucide-react"
+import { useMemo } from "react"
 
-export default function MetricsTopCards({ stats, totalDataLength, filteredDataLength }) {
+export default function MetricsTopCards({ data }) {
+
+  const totalDataLength = data.length;
+
+  const stats = useMemo(() => {
+    const totalRequests = data.length;
+    const uniqueUsers = new Set(data.map((item) => item.username)).size;
+    const uniqueRoutes = new Set(data.map((item) => item.route)).size;
+    const uniqueServices = new Set(data.map((item) => item.service))
+      .size;
+
+    return {
+      totalRequests,
+      uniqueUsers,
+      uniqueRoutes,
+      uniqueServices,
+    };
+  }, [data]);
+
   return (
     <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
       <Card>
@@ -14,7 +33,7 @@ export default function MetricsTopCards({ stats, totalDataLength, filteredDataLe
         <CardContent>
           <div className="text-2xl font-bold">{stats.totalRequests}</div>
           <p className="text-xs text-muted-foreground">
-            {filteredDataLength !== totalDataLength ? `Filtered from ${totalDataLength}` : "All requests"}
+            All requests
           </p>
         </CardContent>
       </Card>

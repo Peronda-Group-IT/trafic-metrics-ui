@@ -60,10 +60,10 @@ COPY --from=builder /app/public ./public
 USER nextjs
 
 # Expose the port the app runs on (default 3000)
-EXPOSE 3002
+EXPOSE 3000
 
 # Set the default port environment variable
-ENV PORT=3002
+ENV PORT=3000
 # Set the default hostname environment variable (listen on all interfaces)
 ENV HOSTNAME=0.0.0.0
 

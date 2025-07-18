@@ -7,7 +7,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
   Select,
@@ -22,17 +21,49 @@ import { Calendar } from "../ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { ChevronDownIcon } from "lucide-react";
 import { format } from "date-fns";
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 export default function MetricsFilters({
-  filters,
-  setFilters,
   uniqueOrigins,
   uniqueUsernames,
-  clearFilters,
 }) {
+
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const pathname = usePathname();
+
   const [open1, setOpen1] = useState(false);
   const [open2, setOpen2] = useState(false);
+
+    const filters = useMemo(
+    () => ({
+      origin: searchParams.get("origin") || "all",
+      username: searchParams.get("username") || "all",
+      startDate: searchParams.get("startDate") || "",
+      endDate: searchParams.get("endDate") || "",
+      service: searchParams.get("service") || "",
+      route: searchParams.get("route") || "",
+    }),
+    [searchParams]
+  );
+
+  const setFilters = (newFilters) => {
+    const params = new URLSearchParams(searchParams);
+    for (const key in newFilters) {
+      if (newFilters[key] && newFilters[key] !== "all") {
+        params.set(key, newFilters[key]);
+      } else {
+        params.delete(key);
+      }
+    }
+    router.replace(`${pathname}?${params.toString()}`);
+  };
+
+  const clearFilters = () => {
+    router.replace(pathname);
+  };
+
   return (
     <Card>
       <CardHeader>
@@ -98,9 +129,9 @@ export default function MetricsFilters({
                   {filters.startDate
                     ? format(
                         new Date(filters.startDate.replace(/-/g, "/")),
-                        "dd/MM/yy"
+                        "dd/MM/yyyy"
                       )
-                    : "dd/mm/yy"}
+                    : "dd/mm/yyyy"}
                   <ChevronDownIcon className="text-gray-400" />
                 </Button>
               </PopoverTrigger>
@@ -144,9 +175,9 @@ export default function MetricsFilters({
                   {filters.endDate
                     ? format(
                         new Date(filters.endDate.replace(/-/g, "/")),
-                        "dd/MM/yy"
+                        "dd/MM/yyyy"
                       )
-                    : "dd/mm/yy"}
+                    : "dd/mm/yyyy"}
                   <ChevronDownIcon className="text-gray-400" />
                 </Button>
               </PopoverTrigger>

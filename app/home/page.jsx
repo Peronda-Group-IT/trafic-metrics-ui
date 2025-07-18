@@ -1,11 +1,18 @@
 import { MetricsDashboardSkeleton } from "@/components/metrics/metrics-dashboard-skeleton";
 import RefreshButton from "@/components/metrics/metrics-refresh-button";
 import MetricsDashboard from "@/components/metrics/new-metrics-dashboard";
-import { fetchMetrics } from "@/lib/server-utils";
+import { fetchOrigins, fetchMetrics, fetchUsernames } from "@/lib/metrics";
 import { Suspense } from "react";
 
 const HomePage = async ({ searchParams }) => {
-  const metrics = await fetchMetrics();
+
+  const params = await searchParams
+
+  const metrics = await fetchMetrics(params);
+
+  const origins = await fetchOrigins();
+
+  const usernames = await fetchUsernames();
 
   return (
     <div className="min-h-screen bg-gray-50 p-6 max-w-7xl mx-auto">
@@ -28,7 +35,7 @@ const HomePage = async ({ searchParams }) => {
           fallback={<MetricsDashboardSkeleton />}
           key={searchParams.toString()}
         >
-          <MetricsDashboard initialData={metrics} />
+          <MetricsDashboard data={metrics} origins={origins} usernames={usernames} />
         </Suspense>
       </div>
     </div>
