@@ -1,14 +1,9 @@
-"use client"
-
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { ActivityIcon, GlobeIcon, TrendingUpIcon, UsersIcon } from "lucide-react"
-import { useMemo } from "react"
 
 export default function MetricsTopCards({ data }) {
 
-  const totalDataLength = data.length;
-
-  const stats = useMemo(() => {
+  const getStats = () => {
     const totalRequests = data.length;
     const uniqueUsers = new Set(data.map((item) => item.username)).size;
     const uniqueRoutes = new Set(data.map((item) => item.route)).size;
@@ -21,7 +16,9 @@ export default function MetricsTopCards({ data }) {
       uniqueRoutes,
       uniqueServices,
     };
-  }, [data]);
+  }
+
+  const stats = getStats();
 
   return (
     <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
