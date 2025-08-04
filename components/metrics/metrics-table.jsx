@@ -17,7 +17,7 @@ export default function MetricsTable({ data }) {
   }
 
   return (
-    <div className="rounded-md border">
+    <div className="rounded-md border max-h-[500px] overflow-y-auto">
       <Table>
         <TableHeader>
           <TableRow>
