@@ -16,6 +16,8 @@ export default function MetricsTable({ data }) {
     return "bg-gray-100 text-gray-800"
   }
 
+  const sortedData = data.slice().sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))
+
   return (
     <div className="rounded-md border max-h-[500px] overflow-y-auto">
       <Table>
@@ -30,14 +32,14 @@ export default function MetricsTable({ data }) {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {data.length === 0 ? (
+          {sortedData.length === 0 ? (
             <TableRow>
               <TableCell colSpan={6} className="py-8 text-center text-muted-foreground">
                 No data matches your current filters
               </TableCell>
             </TableRow>
           ) : (
-            data.map((item) => (
+            sortedData.map((item) => (
               <TableRow key={item.id}>
                 <TableCell className="font-medium">{item.id}</TableCell>
                 <TableCell>
