@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 const URL = process.env.NEXT_PUBLIC_URL;
 
 export const metadata = {
-  title: "Peronda Group CRM",
+  title: "Peronda Group Traffic Metrics",
   description: "Created by Peronda Group IT Team",
   icons: {
     icon: `${URL}/favicon.ico`, // Default favicon
