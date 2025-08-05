@@ -22,10 +22,12 @@ import {
   ChartLegendContent,
 } from "@/components/ui/chart"
 import { UsersIcon, LineChartIcon, PieChartIcon } from "lucide-react"
+import { useIsMobile } from "@/hooks/use-mobile"
 
 const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#8884D8", "#82CA9D"]
 
 export default function MetricsCharts({ chartData, chartConfig, uniqueServicesForChart }) {
+  const isMobile = useIsMobile()
   return (
     <div className="space-y-6">
       {/* Top Row - Full Width Timeline Chart */}
@@ -38,7 +40,7 @@ export default function MetricsCharts({ chartData, chartConfig, uniqueServicesFo
           <CardDescription>Requests over time by service</CardDescription>
         </CardHeader>
         <CardContent>
-          <ChartContainer config={chartConfig} className={"h-96"}>
+          <ChartContainer config={chartConfig} className={"h-60 md:h-96 w-full"}>
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={chartData.timeline}>
                 <CartesianGrid strokeDasharray="3 3" />
@@ -79,7 +81,7 @@ export default function MetricsCharts({ chartData, chartConfig, uniqueServicesFo
                 color: "hsl(var(--chart-4))",
               },
             }}
-            className={"h-72"}
+            className={"h-80 md:h-72 w-full"}
           >
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
@@ -88,8 +90,12 @@ export default function MetricsCharts({ chartData, chartConfig, uniqueServicesFo
                   cx="50%"
                   cy="50%"
                   labelLine={false}
-                  label={({ service, percent }) => `${service} ${(percent * 100).toFixed(0)}%`}
-                  outerRadius={120}
+                  label={
+                    isMobile
+                      ? ({ percent }) => `${(percent * 100).toFixed(0)}%`
+                      : ({ service, percent }) => `${service} ${(percent * 100).toFixed(0)}%`
+                  }
+                  outerRadius={isMobile ? 90 : 120}
                   fill="#8884d8"
                   dataKey="requests"
                   nameKey="service"
@@ -123,7 +129,7 @@ export default function MetricsCharts({ chartData, chartConfig, uniqueServicesFo
                 color: "hsl(var(--chart-3))",
               },
             }}
-            className={"h-72"}
+            className={"h-96 md:h-72 w-full"}
           >
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={chartData.users} layout="vertical">
