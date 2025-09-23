@@ -6,9 +6,11 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Badge } from "@/components/ui/badge"
 import { format } from "date-fns"
 import { Button } from "../ui/button"
+import { Loader } from "lucide-react"
 
 export default function MetricsTable({ data }) {
   const [visibleRequests, setVisibleRequests] = useState(100)
+  const [isLoading, setIsLoading] = useState(false)
 
   const formatTimestamp = (timestamp) => {
     return format(new Date(timestamp), "MMM dd, yyyy HH:mm:ss")
@@ -24,7 +26,11 @@ export default function MetricsTable({ data }) {
   const sortedData = data.slice().sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))
 
   const handleShowMore = () => {
-    setVisibleRequests((prev) => prev + 100)
+    setIsLoading(true)
+    setTimeout(() => {
+      setVisibleRequests((prev) => prev + 100)
+      setIsLoading(false)
+    }, 500) // Simulate a network request
   }
 
   return (
@@ -75,8 +81,14 @@ export default function MetricsTable({ data }) {
       </Table>
       {visibleRequests < sortedData.length && (
         <div className="flex justify-center py-4">
-          <Button onClick={handleShowMore} size={"sm"} className="cursor-pointer">
-            Show 100 more
+          <Button onClick={handleShowMore} size={"sm"} className="cursor-pointer" disabled={isLoading}>
+            {isLoading ? (
+              <div className="flex items-center gap-2">
+                <Loader className="animate-spin" /> 
+              </div>
+            ) : (
+              "Show 100 more"
+            )}
           </Button>
         </div>
       )}

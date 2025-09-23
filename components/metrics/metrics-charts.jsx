@@ -117,7 +117,7 @@ export default function MetricsCharts({ chartData, chartConfig, uniqueServicesFo
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <UsersIcon className="h-5 w-5" />
-            User Activity
+            Top 10 User Activity
           </CardTitle>
           <CardDescription>Requests by user</CardDescription>
         </CardHeader>
@@ -132,7 +132,7 @@ export default function MetricsCharts({ chartData, chartConfig, uniqueServicesFo
             className={"h-96 md:h-72 w-full"}
           >
             <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={chartData.users} layout="vertical">
+              <BarChart data={chartData.users.sort((a, b) => b.requests - a.requests)} layout="vertical">
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis type="number" />
                 <YAxis dataKey="username" type="category" width={120} />
