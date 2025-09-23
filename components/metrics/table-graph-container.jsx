@@ -134,7 +134,7 @@ export default function TableGraphContainer({ data }) {
             <div>
               <CardTitle>Data Analysis</CardTitle>
               <CardDescription>
-                Showing {data.length} records
+                {data.length} records
               </CardDescription>
             </div>
             <Tabs

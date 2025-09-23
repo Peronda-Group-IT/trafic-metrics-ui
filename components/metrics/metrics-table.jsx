@@ -1,10 +1,15 @@
 "use client"
 
+import { useState } from "react"
+
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Badge } from "@/components/ui/badge"
 import { format } from "date-fns"
+import { Button } from "../ui/button"
 
 export default function MetricsTable({ data }) {
+  const [visibleRequests, setVisibleRequests] = useState(100)
+
   const formatTimestamp = (timestamp) => {
     return format(new Date(timestamp), "MMM dd, yyyy HH:mm:ss")
   }
@@ -17,6 +22,10 @@ export default function MetricsTable({ data }) {
   }
 
   const sortedData = data.slice().sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))
+
+  const handleShowMore = () => {
+    setVisibleRequests((prev) => prev + 100)
+  }
 
   return (
     <div className="rounded-md border max-h-[500px] overflow-y-auto">
@@ -39,7 +48,7 @@ export default function MetricsTable({ data }) {
               </TableCell>
             </TableRow>
           ) : (
-            sortedData.map((item) => (
+            sortedData.slice(0, visibleRequests).map((item) => (
               <TableRow key={item.id}>
                 <TableCell className="font-medium">{item.id}</TableCell>
                 <TableCell>
@@ -64,6 +73,13 @@ export default function MetricsTable({ data }) {
           )}
         </TableBody>
       </Table>
+      {visibleRequests < sortedData.length && (
+        <div className="flex justify-center py-4">
+          <Button onClick={handleShowMore} size={"sm"} className="cursor-pointer">
+            Show 100 more
+          </Button>
+        </div>
+      )}
     </div>
   )
 }
