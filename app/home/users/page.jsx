@@ -10,9 +10,9 @@ export default async function UsersPage({searchParams}) {
   // Process data to get the latest entry and request count for each user
   const userData = data.reduce((acc, curr) => {
     if (!acc[curr.username]) {
-      acc[curr.username] = { ...curr, requestCount: 0 };
+      acc[curr.username] = { ...curr, Requests: 0 };
     }
-    acc[curr.username].requestCount++;
+    acc[curr.username].Requests++;
     if (new Date(curr.timestamp) > new Date(acc[curr.username].timestamp)) {
       acc[curr.username].timestamp = curr.timestamp;
       acc[curr.username].service = curr.service;
@@ -20,7 +20,7 @@ export default async function UsersPage({searchParams}) {
     return acc;
   }, {});
 
-  const usersByRequests = Object.values(userData).sort((a, b) => b.requestCount - a.requestCount);
+  const usersByRequests = Object.values(userData).sort((a, b) => b.Requests - a.Requests);
 
   return (
     <div className="max-w-7xl mx-auto">

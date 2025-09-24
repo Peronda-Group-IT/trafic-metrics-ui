@@ -31,15 +31,15 @@ export function UserRequestsChart({ data }) {
               tickLine={false}
               tickMargin={10}
               axisLine={false}
-              tickFormatter={(value) => value.slice(0, 3)}
+              tickFormatter={(value) => value.slice(0, 4)}
               type="category"
             />
-            <XAxis type="number" dataKey="requestCount" />
+            <XAxis type="number" dataKey="Requests" />
             <ChartTooltip
               cursor={false}
-              content={<ChartTooltipContent hideLabel />}
+              content={<ChartTooltipContent />}
             />
-            <Bar dataKey="requestCount" radius={8}>
+            <Bar dataKey="Requests" radius={8}>
               {data.map((entry, index) => {
                 const colors = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#8884D8", "#82CA9D"];
                 return <Cell key={`cell-${index}`} fill={colors[index % colors.length]} />;
