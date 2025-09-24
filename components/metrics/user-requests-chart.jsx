@@ -23,7 +23,7 @@ export function UserRequestsChart({ data }) {
         <CardDescription>Number of requests per user</CardDescription>
       </CardHeader>
       <CardContent>
-        <ChartContainer config={chartConfig} className={"h-96 w-full"}>
+        <ChartContainer config={chartConfig} className={"h-128 w-full"}>
           <BarChart accessibilityLayer data={data} layout="vertical">
             <CartesianGrid horizontal={false} />
             <YAxis
