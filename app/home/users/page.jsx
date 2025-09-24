@@ -8,7 +8,7 @@ export default async function UsersPage({searchParams}) {
   
 
   return (
-    <div>
+    <div className="max-w-7xl mx-auto">
       <UsersTable data={data} searchTerm={search || ''}/>
     </div>
   );
