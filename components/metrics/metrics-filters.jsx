@@ -108,7 +108,7 @@ export default function MetricsFilters({
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="all">All Users</SelectItem>
-                {uniqueUsernames.map((username) => (
+                {uniqueUsernames.sort().map((username) => (
                   <SelectItem key={username} value={username}>
                     {username}
                   </SelectItem>
