@@ -41,7 +41,7 @@ export function UserRequestsChart({ data }) {
             />
             <Bar dataKey="Requests" radius={8}>
               {data.map((entry, index) => {
-                const colors = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#8884D8", "#82CA9D"];
+                const colors = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#8884D8", "#82CA9D", "#FF6F69", "#D0ED57", "#A4DE6C", "#8DD1E1"];
                 return <Cell key={`cell-${index}`} fill={colors[index % colors.length]} />;
               })}
             </Bar>

@@ -24,7 +24,7 @@ import {
 import { UsersIcon, LineChartIcon, PieChartIcon } from "lucide-react"
 import { useIsMobile } from "@/hooks/use-mobile"
 
-const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#8884D8", "#82CA9D"]
+const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#8884D8", "#82CA9D", "#FF6F69", "#D0ED57", "#A4DE6C", "#8DD1E1"]
 
 export default function MetricsCharts({ chartData, chartConfig, uniqueServicesForChart }) {
   const isMobile = useIsMobile()
