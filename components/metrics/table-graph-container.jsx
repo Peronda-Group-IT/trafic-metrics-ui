@@ -43,7 +43,6 @@ export default function TableGraphContainer({ data }) {
       return acc;
     }, {});
   }, [uniqueServicesForChart]);
-
   // Chart data calculations
   const chartData = useMemo(() => {
     if (!data || data.length === 0) {
@@ -105,6 +104,8 @@ export default function TableGraphContainer({ data }) {
       }
       return acc;
     }, []);
+
+    userActivity.sort((a, b) => b.requests - a.requests);
 
     // Service distribution
     const serviceData = data.reduce((acc, item) => {

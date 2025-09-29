@@ -29,8 +29,6 @@ const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#8884D8", "#82CA9D"
 export default function MetricsCharts({ chartData, chartConfig, uniqueServicesForChart }) {
   const isMobile = useIsMobile()
 
-  console.log(chartData)
-
   return (
     <div className="space-y-6">
       {/* Top Row - Full Width Timeline Chart */}
