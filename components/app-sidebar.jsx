@@ -72,7 +72,9 @@ export function AppSidebar() {
     <Sidebar collapsible="icon">
       <SidebarHeader className="flex flex-row justify-between items-center">
         <SidebarMenuItem className={`${isOpen ? "block" : "hidden"}`}>
-          <Image src={`${URL}/rhino.png`} height={35} width={35} alt="CRM" />
+          <Link href={"https://cerahub.perondagroup.com"}>
+            <Image src={`${URL}/rhino.png`} height={35} width={35} alt="CRM" />
+          </Link>
         </SidebarMenuItem>
         <Button
           size={"icon"}
