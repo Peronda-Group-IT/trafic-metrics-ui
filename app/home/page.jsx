@@ -5,8 +5,19 @@ import { fetchOrigins, fetchMetrics, fetchUsernames } from "@/lib/metrics";
 import { Suspense } from "react";
 
 const HomePage = async ({ searchParams }) => {
+  const params = await searchParams;
 
-  const params = await searchParams
+  if (!params?.startDate) {
+    const date = new Date();
+
+    // Subtract one month
+    date.setMonth(date.getMonth() - 1);
+
+    // Format to yyyy-mm-dd
+    const formatted = date.toISOString().split("T")[0];
+
+    params.startDate = formatted;
+  }
 
   const metrics = await fetchMetrics(params);
 
@@ -37,7 +48,11 @@ const HomePage = async ({ searchParams }) => {
           fallback={<MetricsDashboardSkeleton />}
           key={searchParams.toString()}
         >
-          <MetricsDashboard data={metrics} origins={origins} usernames={usernames} />
+          <MetricsDashboard
+            data={metrics}
+            origins={origins}
+            usernames={usernames}
+          />
         </Suspense>
       </div>
     </div>
