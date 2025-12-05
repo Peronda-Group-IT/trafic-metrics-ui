@@ -1,8 +1,13 @@
-import { MetricsDashboardSkeleton } from "@/components/metrics/metrics-dashboard-skeleton";
-import RefreshButton from "@/components/metrics/metrics-refresh-button";
-import MetricsDashboard from "@/components/metrics/new-metrics-dashboard";
-import { fetchOrigins, fetchMetrics, fetchUsernames } from "@/lib/metrics";
 import { Suspense } from "react";
+import RefreshButton from "@/components/metrics/metrics-refresh-button";
+import MetricsCardsLoader from "@/components/metrics/metrics-cards-loader";
+import MetricsFiltersLoader from "@/components/metrics/metrics-filters-loader";
+import MetricsTableLoader from "@/components/metrics/metrics-table-loader";
+import {
+  TopCardsSkeleton,
+  FiltersSkeleton,
+  TableSkeleton
+} from "@/components/metrics/metrics-dashboard-skeleton";
 
 const HomePage = async ({ searchParams }) => {
   const params = await searchParams;
@@ -18,14 +23,6 @@ const HomePage = async ({ searchParams }) => {
 
     params.startDate = formatted;
   }
-
-  const metrics = await fetchMetrics(params);
-
-  const origins = await fetchOrigins();
-
-  const usernames = await fetchUsernames();
-
-  //console.log(metrics)
 
   return (
     <div className="min-h-screen bg-gray-50 p-6 max-w-7xl mx-auto">
@@ -44,15 +41,17 @@ const HomePage = async ({ searchParams }) => {
             <RefreshButton />
           </div>
         </div>
-        <Suspense
-          fallback={<MetricsDashboardSkeleton />}
-          key={searchParams.toString()}
-        >
-          <MetricsDashboard
-            data={metrics}
-            origins={origins}
-            usernames={usernames}
-          />
+
+        <Suspense fallback={<TopCardsSkeleton />}>
+          <MetricsCardsLoader searchParams={params} />
+        </Suspense>
+
+        <Suspense fallback={<FiltersSkeleton />}>
+          <MetricsFiltersLoader />
+        </Suspense>
+
+        <Suspense fallback={<TableSkeleton />}>
+          <MetricsTableLoader searchParams={params} />
         </Suspense>
       </div>
     </div>
