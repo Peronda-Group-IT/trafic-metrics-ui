@@ -36,7 +36,7 @@ export default function MetricsFilters({
   const [open1, setOpen1] = useState(false);
   const [open2, setOpen2] = useState(false);
 
-    const filters = useMemo(
+  const filters = useMemo(
     () => ({
       origin: searchParams.get("origin") || "all",
       username: searchParams.get("username") || "all",
@@ -125,12 +125,13 @@ export default function MetricsFilters({
                   variant="outline"
                   id="date"
                   className="w-full justify-between font-normal cursor-pointer"
+                  suppressHydrationWarning
                 >
                   {filters.startDate
                     ? format(
-                        new Date(filters.startDate.replace(/-/g, "/")),
-                        "dd/MM/yyyy"
-                      )
+                      new Date(filters.startDate.replace(/-/g, "/")),
+                      "dd/MM/yyyy"
+                    )
                     : "dd/mm/yyyy"}
                   <ChevronDownIcon className="text-gray-400" />
                 </Button>
@@ -171,12 +172,13 @@ export default function MetricsFilters({
                   variant="outline"
                   id="date"
                   className="w-full justify-between font-normal cursor-pointer"
+                  suppressHydrationWarning
                 >
                   {filters.endDate
                     ? format(
-                        new Date(filters.endDate.replace(/-/g, "/")),
-                        "dd/MM/yyyy"
-                      )
+                      new Date(filters.endDate.replace(/-/g, "/")),
+                      "dd/MM/yyyy"
+                    )
                     : "dd/mm/yyyy"}
                   <ChevronDownIcon className="text-gray-400" />
                 </Button>

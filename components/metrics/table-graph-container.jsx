@@ -10,7 +10,7 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import MetricsCharts from "./metrics-charts";
 import MetricsTable from "./metrics-table";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { format } from "date-fns";
 import { ActivityIcon, BarChart3Icon } from "lucide-react";
 
@@ -25,6 +25,11 @@ const COLORS = [
 
 export default function TableGraphContainer({ data }) {
   const [activeView, setActiveView] = useState("table");
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const uniqueServicesForChart = useMemo(
     () =>
@@ -171,11 +176,17 @@ export default function TableGraphContainer({ data }) {
             </TabsContent>
 
             <TabsContent value="charts" className="mt-0">
-              <MetricsCharts
-                chartData={chartData}
-                chartConfig={chartConfig}
-                uniqueServicesForChart={uniqueServicesForChart}
-              />
+              {mounted ? (
+                <MetricsCharts
+                  chartData={chartData}
+                  chartConfig={chartConfig}
+                  uniqueServicesForChart={uniqueServicesForChart}
+                />
+              ) : (
+                <div className="h-96 flex items-center justify-center text-muted-foreground">
+                  Loading charts...
+                </div>
+              )}
             </TabsContent>
           </Tabs>
         </CardContent>

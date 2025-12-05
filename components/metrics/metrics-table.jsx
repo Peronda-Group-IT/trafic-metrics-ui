@@ -72,7 +72,9 @@ export default function MetricsTable({ data }) {
                   <div className="font-medium">{item.username}</div>
                 </TableCell>
                 <TableCell>
-                  <div className="text-sm text-muted-foreground">{formatTimestamp(item.timestamp)}</div>
+                  <div className="text-sm text-muted-foreground" suppressHydrationWarning>
+                    {formatTimestamp(item.timestamp)}
+                  </div>
                 </TableCell>
               </TableRow>
             ))
@@ -84,7 +86,7 @@ export default function MetricsTable({ data }) {
           <Button onClick={handleShowMore} size={"sm"} className="cursor-pointer" disabled={isLoading}>
             {isLoading ? (
               <div className="flex items-center gap-2">
-                <Loader className="animate-spin" /> 
+                <Loader className="animate-spin" />
               </div>
             ) : (
               "Show 100 more"
